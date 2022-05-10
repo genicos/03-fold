@@ -129,7 +129,13 @@ type BigInt = [Int]
 -- [1,0,0,2] [0,0,9,9]
 
 padZero :: BigInt -> BigInt -> (BigInt, BigInt)
-padZero l1 l2 = error "TBD:padZero"
+padZero l1 l2
+  | x < y   = ( (clone 0 (y-x)) ++ l1, l2)
+  | x > y   = ( l1, (clone 0 (x-y)) ++ l2)
+  | x == y  = ( l1, l2)
+  where
+    x = length l1
+    y = length l2
 
 --------------------------------------------------------------------------------
 -- | `removeZero ds` strips out all leading `0` from the left-side of `ds`.
@@ -144,7 +150,11 @@ padZero l1 l2 = error "TBD:padZero"
 -- []
 
 removeZero :: BigInt -> BigInt
-removeZero ds = error "TBD:removeZero"
+removeZero [] = []
+removeZero (x:xs)
+  | x == 0 = removeZero xs
+  | otherwise = (x:xs)
+
 
 
 --------------------------------------------------------------------------------
@@ -161,9 +171,9 @@ bigAdd l1 l2     = removeZero res
   where
     (l1', l2')   = padZero l1 l2
     res          = foldLeft f base args
-    f a x        = error "TBD:bigAdd:f"
-    base         = error "TBD:bigAdd:base"
-    args         = error "TBD:bigAdd:args"
+    f (carry:xs) (x1,x2) = (div (x1 + x2 + carry) 10) : ((mod (x1 + x2 + carry) 10): xs )
+    base         = [0]
+    args         = reverse (zip l1' l2')
 
 
 --------------------------------------------------------------------------------
