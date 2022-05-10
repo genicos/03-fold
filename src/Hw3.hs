@@ -184,7 +184,7 @@ bigAdd l1 l2     = removeZero res
 -- [8,9,9,9,1]
 
 mulByInt :: Int -> BigInt -> BigInt
-mulByInt i n = error "TBD:mulByInt"
+mulByInt i n = foldLeft bigAdd [0] (clone n i)
 
 --------------------------------------------------------------------------------
 -- | `bigMul n1 n2` returns the `BigInt` representing the product of `n1` and `n2`.
