@@ -201,4 +201,4 @@ bigMul l1 l2 = res
     (_, res) = foldLeft f base args
     f (s,a) x = (s*10,bigAdd (mulByInt s (mulByInt x l2)) a)
     base     = (1 ,[0])
-    args     = l1
+    args     = reverse l1
